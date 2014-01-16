@@ -10,7 +10,7 @@
     </style>
 
     <style name="Timer" parent="TimerLabel">
-        <item name="android:textSize">45sp</item>
+        <item name="android:textSize">40sp</item>
         <item name="android:typeface">monospace</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentLeft">false</item>
@@ -22,7 +22,7 @@
     </style>
 
     <style name="SmallTimer" parent="Timer">
-        <item name="android:textColor">#f6666</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">#f666</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>
