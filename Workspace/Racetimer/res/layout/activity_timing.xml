@@ -20,12 +20,12 @@
        <TextView
            android:id="@+id/lap"
            style="@style/TimerLabel"
-           android:layout_alignBottom="@+id/lapTime"
+           android:layout_alignParentTop="true"
            android:text="@string/default_lap_num" />
         <TextView
             android:id="@+id/lapTime"
             style="@style/Timer"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/lap"
             android:text="@string/default_time" />
         <TextView
            android:id="@+id/session"

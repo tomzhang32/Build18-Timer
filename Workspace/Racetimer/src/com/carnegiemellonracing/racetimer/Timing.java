@@ -154,7 +154,7 @@ public class Timing extends IOIOActivity {
     int hrs = mins / 60;
     mins = mins % 60;
     int milliseconds = (int) (t % 1000);
-    String out = ""+ mins + ":"
+    String out = ""+ String.format("%02d", mins) + ":"
                   + String.format("%02d", secs) + "."
                   + String.format("%03d", milliseconds);
     if (hrs > 0) {
