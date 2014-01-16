@@ -11,7 +11,6 @@
             backward-compatibility can go here.
         -->
         <item name="android:windowNoTitle">true</item>
-        <item name="android:textColor">#000000</item>
     </style>
 
     <!-- Application theme. -->
