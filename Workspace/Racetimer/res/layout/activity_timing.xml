@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eee" >
+
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_marginLeft="6dp"
+		android:layout_marginRight="6dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginBottom="4dp"
+	    android:background="@drawable/bg_card">
+	    
+        <TextView
+           android:id="@+id/laplabel"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_alignParentTop="true"
+           android:text="@string/Lap"
+           android:textSize="35sp" />
+       <TextView
+           android:id="@+id/lapnum"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toRightOf="@+id/laplabel"
+           android:layout_alignParentTop="true"
+           android:text="@string/default_lap_num"
+           android:textSize="35sp"  />
+
+        <TextView
+            android:id="@+id/currentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/default_time"
+            android:textSize="40sp" />
+	    <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/currentTime"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:text="@string/touch_start"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <ToggleButton
+	        android:id="@+id/ledButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/laplabel"
+	        android:layout_toLeftOf="@+id/lapnum" />
+
+	</RelativeLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+		<!-- <include layout="@layout/lapcard"/> -->
+	</ListView>
+
+</LinearLayout>

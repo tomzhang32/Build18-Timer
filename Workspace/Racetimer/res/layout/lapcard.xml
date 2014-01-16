@@ -1,0 +1,39 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dip"
+    android:layout_marginLeft="6dp"
+	android:layout_marginRight="6dp"
+	android:layout_marginTop="4dp"
+	android:layout_marginBottom="4dp"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_card">
+   <!-- TODO: Build a custom layout for lap times -->
+    
+       <TextView
+           android:id="@+id/lapcardlabel"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_centerVertical="true"
+           android:text="@string/Lap"
+           android:textAppearance="?android:attr/textAppearanceLarge" />
+       <TextView
+           android:id="@+id/lapcardnum"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toRightOf="@+id/lapcardlabel"
+           android:layout_centerVertical="true"
+           android:text="@string/default_lap_num"
+           android:textAppearance="?android:attr/textAppearanceLarge" />
+       
+       <TextView
+           android:id="@+id/lapcardtime"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+           android:layout_centerVertical="true"
+           android:text="@string/default_time"
+           android:textAppearance="?android:attr/textAppearanceLarge" />
+</RelativeLayout>
