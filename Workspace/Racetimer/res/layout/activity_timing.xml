@@ -17,36 +17,33 @@
 	    android:background="@drawable/bg_card">
 	    
         <!-- TODO: align the bottoms of these two textviews -->
-        <TextView
-           android:id="@+id/laplabel"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentLeft="true"
-           android:layout_alignParentTop="true"
-           android:text="@string/Lap"
-           android:textSize="35sp" />
        <TextView
-           android:id="@+id/currentLap"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_toRightOf="@+id/laplabel"
-           android:layout_alignParentTop="true"
-           android:text="@string/default_lap_num"
-           android:textSize="35sp"  />
-
+           android:id="@+id/lap"
+           style="@style/TimerLabel"
+           android:layout_alignBottom="@+id/lapTime"
+           android:text="@string/default_lap_num" />
         <TextView
-            android:id="@+id/currentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:id="@+id/lapTime"
+            style="@style/Timer"
             android:layout_alignParentTop="true"
-            android:text="@string/default_time"
-            android:textSize="40sp" />
+            android:text="@string/default_time" />
+        <TextView
+           android:id="@+id/session"
+           style="@style/SmallTimerLabel"
+           android:layout_alignBottom="@+id/sessionTime"
+           android:text="@string/this_session" />
+        <TextView
+            android:id="@+id/sessionTime"
+            style="@style/SmallTimer"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/lapTime"
+            android:text="@string/default_time" />
+
 	    <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/currentTime"
+            android:layout_below="@+id/sessionTime"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
             android:text="@string/touch_start"

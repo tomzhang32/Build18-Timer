@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="TimerLabel" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="Timer" parent="TimerLabel">
+        <item name="android:textSize">40sp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentLeft">false</item>
+    </style>
+
+    <style name="SmallTimerLabel" parent="TimerLabel">
+        <item name="android:textColor">#f888</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="SmallTimer" parent="Timer">
+        <item name="android:textColor">#f888</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>
