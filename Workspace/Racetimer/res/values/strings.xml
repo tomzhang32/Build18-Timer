@@ -6,10 +6,10 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-    <string name="Lap">&quot;Lap &quot;</string>
     <string name="default_lap_num">Lap 1</string>
-    <string name="default_time">0:12:34.567</string>
+    <string name="default_time">0:00:00.000</string>
     <string name="this_session">This session:</string>
     <string name="touch_start">Touch to start.</string>
   	<string name="touch_stop">Running, touch to stop.</string>
+  	<string name="light_indicator">Light sensor indicator.</string>
 </resources>

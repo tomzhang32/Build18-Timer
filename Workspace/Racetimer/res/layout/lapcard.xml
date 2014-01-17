@@ -12,18 +12,9 @@
    <!-- TODO: Build a custom layout for lap times -->
     
        <TextView
-           android:id="@+id/lapcardlabel"
+           android:id="@+id/lapcardlap"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_alignParentLeft="true"
-           android:layout_centerVertical="true"
-           android:text="@string/Lap"
-           android:textAppearance="?android:attr/textAppearanceLarge" />
-       <TextView
-           android:id="@+id/lapcardnum"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_toRightOf="@+id/lapcardlabel"
            android:layout_centerVertical="true"
            android:text="@string/default_lap_num"
            android:textAppearance="?android:attr/textAppearanceLarge" />
