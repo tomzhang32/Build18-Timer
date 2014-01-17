@@ -16,7 +16,16 @@
     	android:clickable="true"
 	    android:background="@drawable/bg_card">
 	    
-        <!-- TODO: align the bottoms of these two textviews -->
+      <!-- <ImageView
+        android:id="@+id/lightIcon"
+	      style="@style/LightOn"
+        android:src="@drawable/circle"
+        android:contentDescription="@string/light_indicator" /> -->
+	      <View
+	        android:id="@+id/lightIcon"
+	        style="@style/LightIcon"
+	        android:background="@drawable/light_off_icon" />
+
        <TextView
            android:id="@+id/lap"
            style="@style/TimerLabel"
