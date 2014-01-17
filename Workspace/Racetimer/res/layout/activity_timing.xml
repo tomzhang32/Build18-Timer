@@ -56,6 +56,18 @@
 	      android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	</RelativeLayout>
+	
+  <TextView
+    android:id="@+id/TestButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    android:textSize="30sp"
+    android:text="Button"
+    android:background="@drawable/bg_card" />
 
   <ListView
     android:id="@+id/lapList"
@@ -63,7 +75,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
-    android:layout_marginTop="6dp"
+    android:layout_marginTop="10dp"
     android:layout_marginBottom="6dp"
     android:divider="@android:color/transparent"
     android:dividerHeight="6dp" >

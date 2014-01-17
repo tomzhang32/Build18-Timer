@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.carnegiemellonracing.racetimer.R;
 
 import ioio.lib.api.DigitalInput;
-import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.exception.ConnectionLostException;
 import ioio.lib.util.BaseIOIOLooper;
 import ioio.lib.util.IOIOLooper;
@@ -30,16 +29,18 @@ import android.widget.Toast;
  */
 public class Timing extends IOIOActivity {
   private TextView status_;
-  private TextView currentLapTimeTV_, currentLapNumTV_, currentSessionTimeTV_;
+  private TextView currentLapTimeTV_, currentLapNumTV_, currentTotalTimeTV_;
   private View lightIndicator_;
   private RelativeLayout timerBox_;
   private ListView lapList_;
+  private TextView testButton_;
 
   private long startTime_;
-  private boolean isRunning_ = false;
+  private boolean isRunning_ = false, connectedToIOIO_ = false;
 
   private ArrayList<Long> lapTimes = new ArrayList<Long>();
   private Handler timerHandler = new Handler();
+  private LapListAdapter lla;
 
   /**
    * Initialize the GUI.
@@ -53,12 +54,15 @@ public class Timing extends IOIOActivity {
     status_ = (TextView) findViewById(R.id.status);
     currentLapTimeTV_ = (TextView) findViewById(R.id.lapTime);
     currentLapNumTV_ = (TextView) findViewById(R.id.lap);
-    currentSessionTimeTV_ = (TextView) findViewById(R.id.sessionTime);
+    currentTotalTimeTV_ = (TextView) findViewById(R.id.sessionTime);
     lightIndicator_ = (View) findViewById(R.id.lightIcon);
     timerBox_ = (RelativeLayout) findViewById(R.id.timerBox);
     lapList_ = (ListView) findViewById(R.id.lapList);
+    lla = new LapListAdapter(this, lapTimes);
+    lapList_.setAdapter(lla);
 
     isRunning_ = false;
+    startTime_ = -1;
 
     // Define what happens when you click the timer box.
     timerBox_.setOnClickListener(new OnClickListener() {
@@ -66,8 +70,8 @@ public class Timing extends IOIOActivity {
       public void onClick(View v) {
         isRunning_ = !isRunning_;
         if (isRunning_) {
+          reset();
           status_.setText(R.string.touch_stop);
-          lightTriggered();
           // TODO: clear list
         } else {
           status_.setText(R.string.touch_start);
@@ -76,26 +80,15 @@ public class Timing extends IOIOActivity {
         }
       }
     });
+    
+    testButton_ = (TextView) findViewById(R.id.TestButton);
+    testButton_.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        lightTriggered();
+      }
+    });
   }
-
-  // New Runnable that updates the UI on its own thread
-  private Runnable updateTotalTimerThread = new Runnable() {
-    public void run() {
-      long deltaTime_ = SystemClock.uptimeMillis() - startTime_;
-      currentSessionTimeTV_.setText(Utils.parseTime(deltaTime_));
-      timerHandler.postDelayed(this, 0);
-    }
-  };
-
-  private Runnable updateLapTimerThread = new Runnable() {
-    public void run() {
-      // Use the last element in the ArrayList in case a lap is deleted
-      long lastLap = lapTimes.get(lapTimes.size() - 1);
-      long deltaTime_ = SystemClock.uptimeMillis() - lastLap;
-      currentLapTimeTV_.setText(Utils.parseTime(deltaTime_));
-      timerHandler.postDelayed(this, 0);
-    }
-  };
 
   /**
    * This is the thread on which all the IOIO activity happens. It will be run
@@ -105,7 +98,6 @@ public class Timing extends IOIOActivity {
    * be called repetitively until the IOIO gets disconnected.
    */
   class Looper extends BaseIOIOLooper {
-    /** The on-board LED. */
     private DigitalInput lightSensor_;
     private boolean isLit_;
 
@@ -133,7 +125,6 @@ public class Timing extends IOIOActivity {
           lightSensor_.waitForValue(true);
           // isLit_ = !lightSensor_.read();
           isLit_ = false;
-          // led_.write(isLit_);
           setLightStatus(isLit_);
           if(!isLit_) {
             // lightTriggered();
@@ -163,17 +154,51 @@ public class Timing extends IOIOActivity {
     return new Looper();
   }
 
+
+  // New Runnable that updates the UI on its own thread
+  private Runnable updateTotalTimerThread = new Runnable() {
+    public void run() {
+      long deltaTime_ = SystemClock.uptimeMillis() - startTime_;
+      currentTotalTimeTV_.setText(Utils.parseTime(deltaTime_));
+      timerHandler.postDelayed(this, 0);
+    }
+  };
+
+  private Runnable updateLapTimerThread = new Runnable() {
+    public void run() {
+      // Use the last element in the ArrayList in case a lap is deleted
+      long lastLap = startTime_;
+      if (lapTimes.size() > 0) {
+        lastLap = lapTimes.get(lapTimes.size() - 1);
+      }
+      long deltaTime_ = SystemClock.uptimeMillis() - lastLap;
+      currentLapTimeTV_.setText(Utils.parseTime(deltaTime_));
+      timerHandler.postDelayed(this, 0);
+    }
+  };
+
   // A method to start the timer
   private void lightTriggered() {
-    if (lapTimes.size() == 0) {
-      startTime_ = SystemClock.uptimeMillis();
-      lapTimes.add(startTime_);
-      timerHandler.postDelayed(updateTotalTimerThread, 0);
-      timerHandler.postDelayed(updateLapTimerThread, 0);
-    } else {
-      lapTimes.add(System.currentTimeMillis());
-      // TODO: update laps
+    if (isRunning_) {
+      if (startTime_ == -1) {
+        startTime_ = SystemClock.uptimeMillis();
+        lla.setStartTime(startTime_);
+        timerHandler.postDelayed(updateTotalTimerThread, 0);
+        timerHandler.postDelayed(updateLapTimerThread, 0);
+      } else {
+        // Automatically updates lapTimes as well.
+        lla.add(SystemClock.uptimeMillis());
+        currentLapNumTV_.setText("Lap " + lla.getCount());
+      }
+      // updateUI();
     }
+  }
+  
+  private void reset() {
+    startTime_ = -1;
+    lla.clear();
+    currentTotalTimeTV_.setText(R.string.default_time);
+    currentLapTimeTV_.setText(R.string.default_time);
   }
   
   private void setLightStatus(final boolean isLit) {
