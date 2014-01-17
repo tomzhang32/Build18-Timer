@@ -84,7 +84,9 @@
     android:layout_marginTop="10dp"
     android:layout_marginBottom="6dp"
     android:divider="@android:color/transparent"
-    android:dividerHeight="6dp" >
+    android:dividerHeight="6dp"
+    android:stackFromBottom="true"
+    android:transcriptMode="alwaysScroll" >
 
 		<!-- <include layout="@layout/lapcard"/> -->
 	</ListView>
