@@ -4,9 +4,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:layout_marginLeft">6dp</item>
-        <item name="android:layout_marginRight">6dp</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="Timer" parent="TimerLabel">
@@ -17,15 +15,11 @@
     </style>
 
     <style name="SmallTimerLabel" parent="TimerLabel">
-        <item name="android:textColor">#f666</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="SmallTimer" parent="Timer">
-        <item name="android:textColor">#f666</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textSize">22sp</item>
     </style>
     
     <style name="LightIcon" parent="">

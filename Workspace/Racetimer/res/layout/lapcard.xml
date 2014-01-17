@@ -2,29 +2,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dip"
-    android:layout_marginLeft="6dp"
-	android:layout_marginRight="6dp"
-	android:layout_marginTop="4dp"
-	android:layout_marginBottom="4dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     android:orientation="horizontal"
     android:background="@drawable/bg_card">
-   <!-- TODO: Build a custom layout for lap times -->
     
        <TextView
            android:id="@+id/lapcardlap"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
+           style="@style/SmallTimerLabel"
            android:layout_centerVertical="true"
-           android:text="@string/default_lap_num"
-           android:textAppearance="?android:attr/textAppearanceLarge" />
+           android:text="@string/default_lap_num" />
        
        <TextView
            android:id="@+id/lapcardtime"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentRight="true"
+           style="@style/SmallTimer"
            android:layout_centerVertical="true"
-           android:text="@string/default_time"
-           android:textAppearance="?android:attr/textAppearanceLarge" />
+           android:text="@string/default_time" />
 </RelativeLayout>

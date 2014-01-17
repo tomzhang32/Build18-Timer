@@ -11,54 +11,62 @@
 	    android:layout_height="wrap_content"
       android:layout_marginLeft="6dp"
     	android:layout_marginRight="6dp"
-    	android:layout_marginTop="4dp"
-    	android:layout_marginBottom="4dp"
+    	android:layout_marginTop="6dp"
+    	android:layout_marginBottom="6dp"
     	android:clickable="true"
 	    android:background="@drawable/bg_card">
 
       <View
-	        android:id="@+id/lightIcon"
-	        style="@style/LightIcon"
-	        android:background="@drawable/light_off_icon" />
+	      android:id="@+id/lightIcon"
+	      style="@style/LightIcon"
+	      android:background="@drawable/light_off_icon" />
 
-       <TextView
-           android:id="@+id/lap"
-           style="@style/TimerLabel"
-           android:layout_alignParentTop="true"
-           android:text="@string/default_lap_num" />
+				<TextView
+				  android:id="@+id/lap"
+				  style="@style/TimerLabel"
+				  android:layout_alignParentTop="true"
+				  android:text="@string/default_lap_num" />
         <TextView
-            android:id="@+id/lapTime"
-            style="@style/Timer"
-            android:layout_below="@+id/lap"
-            android:text="@string/default_time" />
+          android:id="@+id/lapTime"
+          style="@style/Timer"
+          android:layout_below="@+id/lap"
+          android:text="@string/default_time" />
         <TextView
-           android:id="@+id/session"
-           style="@style/SmallTimerLabel"
-           android:layout_alignBottom="@+id/sessionTime"
-           android:text="@string/this_session" />
+          android:id="@+id/session"
+          style="@style/SmallTimerLabel"
+          android:textColor="#f666"
+          android:layout_alignBottom="@+id/sessionTime"
+          android:text="@string/this_session" />
         <TextView
-            android:id="@+id/sessionTime"
-            style="@style/SmallTimer"
-            android:layout_marginTop="4dp"
-            android:layout_below="@+id/lapTime"
-            android:text="@string/default_time" />
+	        android:id="@+id/sessionTime"
+	        style="@style/SmallTimer"
+	        android:textColor="#f666"
+	        android:layout_marginTop="2dp"
+	        android:layout_below="@+id/lapTime"
+	        android:text="@string/default_time" />
 
 	    <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sessionTime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp"
-            android:text="@string/touch_start"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+	      android:id="@+id/status"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:layout_below="@+id/sessionTime"
+	      android:layout_centerHorizontal="true"
+	      android:layout_marginTop="8dp"
+	      android:text="@string/touch_start"
+	      android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	</RelativeLayout>
 
-    <ListView
-        android:id="@+id/lapList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+  <ListView
+    android:id="@+id/lapList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="6dp" >
 
 		<!-- <include layout="@layout/lapcard"/> -->
 	</ListView>
