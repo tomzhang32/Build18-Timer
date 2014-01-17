@@ -11,5 +11,8 @@
     <string name="this_session">Total:</string>
     <string name="touch_start">Touch to start.</string>
   	<string name="touch_stop">Running, touch to stop.</string>
+  	<string name="stop">Stop</string>
+  	<string name="reset">Reset</string>
+  	<string name="ignore">Ignore lap</string>
   	<string name="light_indicator">Light sensor indicator.</string>
 </resources>

@@ -7,14 +7,7 @@
 
     <RelativeLayout
       android:id="@+id/timerBox"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-      android:layout_marginLeft="6dp"
-    	android:layout_marginRight="6dp"
-    	android:layout_marginTop="6dp"
-    	android:layout_marginBottom="10dp"
-    	android:clickable="true"
-	    android:background="@drawable/bg_card">
+	    style="@style/ClickableCard" >
 
       <View
 	      android:id="@+id/lightIcon"
@@ -57,28 +50,48 @@
 
 	</RelativeLayout>
 	
+  <LinearLayout
+    android:id="@+id/ButtonBox"
+    android:orientation="horizontal"
+    style="@style/Wrapper"
+    android:layout_height="0dp"
+    android:baselineAligned="false" >
+	  <RelativeLayout 
+      android:id="@+id/StopResetButton"
+      style="@style/ClickableCard"
+      android:layout_weight="1" >
+      <TextView
+	      android:id="@+id/StopReset"
+	      style="@style/ButtonLabel"
+	      android:text="@string/stop" />
+	  </RelativeLayout>
+
+	  <RelativeLayout
+      android:id="@+id/IgnoreLastLapButton"
+      style="@style/ClickableCard"
+      android:layout_weight="1" >
+      <TextView
+        android:id="@+id/ignore"
+        style="@style/ButtonLabel"
+        android:text="@string/ignore" />
+    </RelativeLayout>
+  </LinearLayout>
+	
   <TextView
     android:id="@+id/TestButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
-    android:layout_marginBottom="10dp"
-    android:textSize="30sp"
-    android:text="Button"
-    android:background="@drawable/bg_card" />
+    style="@style/ClickableCard"
+    android:textSize="25sp"
+    android:text="Button" />
 
   <View
     android:layout_width="fill_parent"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
+    android:layout_margin="6dp"
     android:layout_height="1dp"
     android:background="@android:color/darker_gray"/>
 
   <ListView
     android:id="@+id/lapList"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/Wrapper"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
     android:layout_marginTop="10dp"
