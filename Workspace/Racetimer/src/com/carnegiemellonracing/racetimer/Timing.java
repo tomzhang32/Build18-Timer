@@ -61,8 +61,7 @@ public class Timing extends IOIOActivity {
     lla = new LapListAdapter(this, lapTimes);
     lapList_.setAdapter(lla);
 
-    isRunning_ = false;
-    startTime_ = -1;
+    reset();
 
     // Define what happens when you click the timer box.
     timerBox_.setOnClickListener(new OnClickListener() {
@@ -70,17 +69,18 @@ public class Timing extends IOIOActivity {
       public void onClick(View v) {
         // if (connectedToIOIO_) {
         if (true) {
-          isRunning_ = !isRunning_;
-          if (isRunning_) {
+          if (!isRunning_) {
+            // Not currently running, so begin running
             reset();
             status_.setText(R.string.touch_stop);
             v.setKeepScreenOn(true);
           } else {
-            status_.setText(R.string.touch_start);
+            status_.setText(R.string.touch_restart);
             timerHandler.removeCallbacks(updateTotalTimerThread);
             timerHandler.removeCallbacks(updateLapTimerThread);
             v.setKeepScreenOn(false);
           }
+          isRunning_ = !isRunning_;
         } else {
           makeToast("Waiting for IOIO...");
         }
@@ -201,6 +201,7 @@ public class Timing extends IOIOActivity {
   
   private void reset() {
     startTime_ = -1;
+    isRunning_ = false;
     lla.clear();
     currentTotalTimeTV_.setText(R.string.default_time);
     currentLapTimeTV_.setText(R.string.default_time);

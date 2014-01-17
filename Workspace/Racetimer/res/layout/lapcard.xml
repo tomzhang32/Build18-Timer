@@ -3,19 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:orientation="horizontal"
     android:background="@drawable/bg_card">
     
        <TextView
            android:id="@+id/lapcardlap"
            style="@style/SmallTimerLabel"
+           android:layout_width="match_parent"
            android:layout_centerVertical="true"
            android:text="@string/default_lap_num" />
        
        <TextView
            android:id="@+id/lapcardtime"
            style="@style/SmallTimer"
+           android:layout_toLeftOf="@+id/deleteButton"
+           android:layout_alignParentRight="false"
            android:layout_centerVertical="true"
+           android:layout_margin="10dp"
            android:text="@string/default_time" />
+
+       <TextView
+           android:id="@+id/deleteButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="6dp"
+           android:layout_alignParentRight="true"
+           android:layout_centerVertical="true"
+           android:text="@string/x"
+           android:textSize="35sp"
+           android:textColor="@android:color/secondary_text_dark" />
+
 </RelativeLayout>
