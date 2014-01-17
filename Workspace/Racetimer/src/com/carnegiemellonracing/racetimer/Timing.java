@@ -68,17 +68,23 @@ public class Timing extends IOIOActivity {
     timerBox_.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        isRunning_ = !isRunning_;
-        if (isRunning_) {
-          reset();
-          status_.setText(R.string.touch_stop);
-          // TODO: clear list
+        // if (connectedToIOIO_) {
+        if (true) {
+          isRunning_ = !isRunning_;
+          if (isRunning_) {
+            reset();
+            status_.setText(R.string.touch_stop);
+            v.setKeepScreenOn(true);
+          } else {
+            status_.setText(R.string.touch_start);
+            timerHandler.removeCallbacks(updateTotalTimerThread);
+            timerHandler.removeCallbacks(updateLapTimerThread);
+            v.setKeepScreenOn(false);
+          }
         } else {
-          status_.setText(R.string.touch_start);
-          timerHandler.removeCallbacks(updateTotalTimerThread);
-          timerHandler.removeCallbacks(updateLapTimerThread);
+          makeToast("Waiting for IOIO...");
         }
-      }
+      } 
     });
     
     testButton_ = (TextView) findViewById(R.id.TestButton);
@@ -107,6 +113,7 @@ public class Timing extends IOIOActivity {
      */
     @Override
     public void setup() throws ConnectionLostException {
+      connectedToIOIO_ = true;
       lightSensor_ = ioio_.openDigitalInput(2);
       makeToast("Connected to IOIO!");
     }
@@ -124,11 +131,9 @@ public class Timing extends IOIOActivity {
           // True is when there's no light
           lightSensor_.waitForValue(true);
           // isLit_ = !lightSensor_.read();
-          isLit_ = false;
-          setLightStatus(isLit_);
-          if(!isLit_) {
-            // lightTriggered();
-          }
+          // isLit_ = false;
+          setLightStatus(false);
+          lightTriggered();
           // Wait for the light to come back
           lightSensor_.waitForValue(false);
           setLightStatus(true);
@@ -142,7 +147,8 @@ public class Timing extends IOIOActivity {
       
     @Override
     public void disconnected() {
-      // TODO: Implement what happens when lose connection
+      connectedToIOIO_ = false;
+      super.disconnected();
     }
   }
   
@@ -188,9 +194,8 @@ public class Timing extends IOIOActivity {
       } else {
         // Automatically updates lapTimes as well.
         lla.add(SystemClock.uptimeMillis());
-        currentLapNumTV_.setText("Lap " + lla.getCount());
+        currentLapNumTV_.setText("Lap " + (lla.getCount()+1));
       }
-      // updateUI();
     }
   }
   
@@ -199,6 +204,7 @@ public class Timing extends IOIOActivity {
     lla.clear();
     currentTotalTimeTV_.setText(R.string.default_time);
     currentLapTimeTV_.setText(R.string.default_time);
+    currentLapNumTV_.setText(R.string.default_lap_num);
   }
   
   private void setLightStatus(final boolean isLit) {

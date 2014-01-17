@@ -34,7 +34,8 @@ public class LapListAdapter extends ArrayAdapter<Long> {
     TextView lapNumTV = (TextView) lapCard.findViewById(R.id.lapcardlap);
     TextView lapTimeTV = (TextView) lapCard.findViewById(R.id.lapcardtime);
 
-    lapNumTV.setText("Lap " + position);
+    int lapNum = position + 1;
+    lapNumTV.setText("Lap " + lapNum);
     
     // Calculate the elapsed time since last trigger
     long elapsed;
