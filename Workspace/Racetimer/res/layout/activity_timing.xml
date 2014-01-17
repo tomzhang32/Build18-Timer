@@ -15,13 +15,8 @@
     	android:layout_marginBottom="4dp"
     	android:clickable="true"
 	    android:background="@drawable/bg_card">
-	    
-      <!-- <ImageView
-        android:id="@+id/lightIcon"
-	      style="@style/LightOn"
-        android:src="@drawable/circle"
-        android:contentDescription="@string/light_indicator" /> -->
-	      <View
+
+      <View
 	        android:id="@+id/lightIcon"
 	        style="@style/LightIcon"
 	        android:background="@drawable/light_off_icon" />
@@ -61,6 +56,7 @@
 	</RelativeLayout>
 
     <ListView
+        android:id="@+id/lapList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 

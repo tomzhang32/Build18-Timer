@@ -1,26 +1,24 @@
 package com.carnegiemellonracing.racetimer;
 
+import java.util.ArrayList;
+
 import com.carnegiemellonracing.racetimer.R;
 
 import ioio.lib.api.DigitalInput;
 import ioio.lib.api.DigitalOutput;
-import ioio.lib.api.IOIO;
 import ioio.lib.api.exception.ConnectionLostException;
 import ioio.lib.util.BaseIOIOLooper;
 import ioio.lib.util.IOIOLooper;
 import ioio.lib.util.android.IOIOActivity;
-import android.R.drawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 /**
  * This is the main activity of the HelloIOIO example application.
@@ -32,14 +30,17 @@ import android.widget.ToggleButton;
  */
 public class Timing extends IOIOActivity {
   private TextView status_;
-  private TextView currentLapTimeTextBox_, currentLapNumTextBox_, currentSessionTimeTextBox_;
+  private TextView currentLapTimeTV_, currentLapNumTV_, currentSessionTimeTV_;
   private View lightIndicator_;
-  private int currentLapNum_ = 0;
-  private long startTime_, lastLapTime_;
-  private Handler timerHandler = new Handler();
-  
   private RelativeLayout timerBox_;
+  private ListView lapList_;
+
+  private long startTime_;
   private boolean isRunning_ = false;
+
+  private ArrayList<Long> lapTimes = new ArrayList<Long>();
+  private Handler timerHandler = new Handler();
+
   /**
    * Initialize the GUI.
    */
@@ -47,14 +48,17 @@ public class Timing extends IOIOActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_timing);
+
+    // Find all the UI elements
     status_ = (TextView) findViewById(R.id.status);
-    currentLapTimeTextBox_ = (TextView) findViewById(R.id.lapTime);
-    currentLapNumTextBox_ = (TextView) findViewById(R.id.lap);
-    currentLapNum_ = 0;
-    currentSessionTimeTextBox_ = (TextView) findViewById(R.id.sessionTime);
+    currentLapTimeTV_ = (TextView) findViewById(R.id.lapTime);
+    currentLapNumTV_ = (TextView) findViewById(R.id.lap);
+    currentSessionTimeTV_ = (TextView) findViewById(R.id.sessionTime);
     lightIndicator_ = (View) findViewById(R.id.lightIcon);
-    
     timerBox_ = (RelativeLayout) findViewById(R.id.timerBox);
+    lapList_ = (ListView) findViewById(R.id.lapList);
+
+    isRunning_ = false;
 
     // Define what happens when you click the timer box.
     timerBox_.setOnClickListener(new OnClickListener() {
@@ -76,17 +80,19 @@ public class Timing extends IOIOActivity {
 
   // New Runnable that updates the UI on its own thread
   private Runnable updateTotalTimerThread = new Runnable() {
-    public void run() {   
+    public void run() {
       long deltaTime_ = SystemClock.uptimeMillis() - startTime_;
-      currentSessionTimeTextBox_.setText(parseTime(deltaTime_));
+      currentSessionTimeTV_.setText(Utils.parseTime(deltaTime_));
       timerHandler.postDelayed(this, 0);
     }
   };
-  
+
   private Runnable updateLapTimerThread = new Runnable() {
     public void run() {
-      long deltaTime_ = SystemClock.uptimeMillis() - lastLapTime_;
-      currentLapTimeTextBox_.setText(parseTime(deltaTime_));
+      // Use the last element in the ArrayList in case a lap is deleted
+      long lastLap = lapTimes.get(lapTimes.size() - 1);
+      long deltaTime_ = SystemClock.uptimeMillis() - lastLap;
+      currentLapTimeTV_.setText(Utils.parseTime(deltaTime_));
       timerHandler.postDelayed(this, 0);
     }
   };
@@ -100,41 +106,41 @@ public class Timing extends IOIOActivity {
    */
   class Looper extends BaseIOIOLooper {
     /** The on-board LED. */
-    private DigitalOutput led_;
     private DigitalInput lightSensor_;
     private boolean isLit_;
 
     /**
      * Called every time a connection with IOIO has been established.
-     * Typically used to open pins.
-     * @throws ConnectionLostException
-     *             When IOIO connection is lost.
+     * @throws ConnectionLostException, When IOIO connection is lost.
      */
     @Override
     public void setup() throws ConnectionLostException {
-      led_ = ioio_.openDigitalOutput(0, true);
       lightSensor_ = ioio_.openDigitalInput(2);
       makeToast("Connected to IOIO!");
     }
 
     /**
      * Called repetitively while the IOIO is connected.
-     * @throws ConnectionLostException
-     *             When IOIO connection is lost.
+     * @throws ConnectionLostException, When IOIO connection is lost.
      */
     @Override
     public void loop() throws ConnectionLostException {
       // if(isRunning_) {
       if(true) {
         try {
-          lightSensor_.waitForValue(true); // True is when there's no light
+          // Wait for a beam break
+          // True is when there's no light
+          lightSensor_.waitForValue(true);
           // isLit_ = !lightSensor_.read();
           isLit_ = false;
-          led_.write(isLit_);
+          // led_.write(isLit_);
           setLightStatus(isLit_);
           if(!isLit_) {
             // lightTriggered();
           }
+          // Wait for the light to come back
+          lightSensor_.waitForValue(false);
+          setLightStatus(true);
 
           Thread.sleep(10);
         } catch (InterruptedException e) {
@@ -159,30 +165,15 @@ public class Timing extends IOIOActivity {
 
   // A method to start the timer
   private void lightTriggered() {
-    if (currentLapNum_ == 0) {
+    if (lapTimes.size() == 0) {
       startTime_ = SystemClock.uptimeMillis();
-      lastLapTime_ = startTime_;
+      lapTimes.add(startTime_);
       timerHandler.postDelayed(updateTotalTimerThread, 0);
       timerHandler.postDelayed(updateLapTimerThread, 0);
     } else {
-      // TODO: update laps 
+      lapTimes.add(System.currentTimeMillis());
+      // TODO: update laps
     }
-  }
-
-  private String parseTime(long t) {
-    int secs = (int) (t / 1000);
-    int mins = secs / 60;
-    secs = secs % 60;
-    int hrs = mins / 60;
-    mins = mins % 60;
-    int milliseconds = (int) (t % 1000);
-    String out = ""+ String.format("%02d", mins) + ":"
-                  + String.format("%02d", secs) + "."
-                  + String.format("%03d", milliseconds);
-    if (hrs > 0) {
-      out = "" + hrs + ":" + out;
-    }
-    return out;
   }
   
   private void setLightStatus(final boolean isLit) {
