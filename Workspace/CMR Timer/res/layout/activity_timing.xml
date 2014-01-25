@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+      android:id="@+id/timerBox"
+	    style="@style/ClickableCard" >
+
+      <View
+	      android:id="@+id/lightIcon"
+	      style="@style/LightIcon"
+	      android:background="@drawable/light_off_icon" />
+
+				<TextView
+				  android:id="@+id/lap"
+				  style="@style/TimerLabel"
+				  android:layout_alignParentTop="true"
+				  android:text="@string/default_lap_num" />
+        <TextView
+          android:id="@+id/lapTime"
+          style="@style/Timer"
+          android:layout_below="@+id/lap"
+          android:text="@string/default_time" />
+        <TextView
+          android:id="@+id/session"
+          style="@style/SmallTimerLabel"
+          android:textColor="#f666"
+          android:layout_alignBottom="@+id/sessionTime"
+          android:text="@string/this_session" />
+        <TextView
+	        android:id="@+id/sessionTime"
+	        style="@style/SmallTimer"
+	        android:textColor="#f666"
+	        android:layout_marginTop="2dp"
+	        android:layout_below="@+id/lapTime"
+	        android:text="@string/default_time" />
+
+	    <TextView
+	      android:id="@+id/status"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:layout_below="@+id/sessionTime"
+	      android:layout_centerHorizontal="true"
+	      android:layout_marginTop="8dp"
+	      android:text="@string/touch_start"
+	      android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	</RelativeLayout>
+
+  <TextView
+    android:id="@+id/TestButton"
+    style="@style/ClickableCard"
+    android:textSize="25sp"
+    android:text="Button" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_margin="6dp"
+    android:layout_height="1dp"
+    android:background="@android:color/darker_gray"/>
+
+  <ListView
+    android:id="@+id/lapList"
+    style="@style/Wrapper"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="6dp"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="6dp"
+    android:stackFromBottom="true"
+    android:transcriptMode="alwaysScroll" >
+
+	</ListView>
+
+</LinearLayout>
